@@ -49,7 +49,7 @@ class OGGDecoder {
     private var numChannels: Int32 = 1          // number of channels
     private var pcmDataBuffer = UnsafeMutablePointer<Float>.allocate(capacity: 0) // decoded pcm float data
     
-    private static let validSampleRates: [Int32] = [8000, 12000, 16000, 24000, 48000]
+    private static let validSampleRates: [Int32] = [8000, 12000, 16000, 24000, 44100, 48000]
 
     init(audioData: Data) throws {
         // set properties
