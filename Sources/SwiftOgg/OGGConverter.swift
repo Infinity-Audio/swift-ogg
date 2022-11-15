@@ -26,13 +26,13 @@ public enum OGGConverterError: Error {
 
 public class OGGConverter {
 
-    public static func convertOpusOGGToM4aFile(src: URL, dest: URL) throws {
+    public static func convertOpusOGGToM4aFile(src: URL, dest: URL, sampleRate: Double? = 48000) throws {
         do {
             let data = try Data(contentsOf: src)
             let decoder = try OGGDecoder(audioData: data)
             guard let layout = AVAudioChannelLayout(layoutTag: kAudioChannelLayoutTag_Mono) else { throw OGGConverterError.failedToCreateAVAudioChannelLayout }
             
-            let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: Double(decoder.sampleRate), interleaved: false, channelLayout: layout)
+            let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: sampleRate ?? Double(decoder.sampleRate), interleaved: false, channelLayout: layout)
             guard let buffer = decoder.pcmData.toPCMBuffer(format: format) else { throw OGGConverterError.failedToCreatePCMBuffer }
             var settings: [String : Any] = [:]
 
